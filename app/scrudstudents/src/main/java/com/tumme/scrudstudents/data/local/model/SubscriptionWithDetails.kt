@@ -8,10 +8,10 @@ import androidx.room.ColumnInfo
  * The property names must match the column names or aliases returned by the DAO query.
  */
 data class SubscriptionWithDetails(
-    val idStudent: Int,
+    val idUser: Int,
     val idCourse: Int,
-    @ColumnInfo(name = "studentFirstName") val studentFirstName: String,
-    @ColumnInfo(name = "studentLastName") val studentLastName: String,
+    @ColumnInfo(name = "userFirstName") val userFirstName: String,
+    @ColumnInfo(name = "userLastName") val userLastName: String,
     @ColumnInfo(name = "courseName") val courseName: String,
     val score: Float
 )

@@ -13,6 +13,7 @@ import java.util.Locale
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tumme.scrudstudents.data.local.model.CourseEntity
 import com.tumme.scrudstudents.data.local.model.LevelCourse
+import com.tumme.scrudstudents.ui.viewmodels.CourseListViewModel
 
 @Composable
 fun CourseFormScreen(

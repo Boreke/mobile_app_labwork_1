@@ -4,9 +4,11 @@ import android.content.Context
 import androidx.room.Room
 import com.tumme.scrudstudents.data.local.AppDatabase
 import com.tumme.scrudstudents.data.local.dao.CourseDao
-import com.tumme.scrudstudents.data.local.dao.StudentDao
+import com.tumme.scrudstudents.data.local.dao.UserDao
 import com.tumme.scrudstudents.data.local.dao.SubscribeDao
-import com.tumme.scrudstudents.data.repository.SCRUDRepository
+import com.tumme.scrudstudents.data.repository.CourseRepository
+import com.tumme.scrudstudents.data.repository.StudentRepository
+import com.tumme.scrudstudents.data.repository.SubscriptionRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,13 +27,20 @@ object AppModule {
             .fallbackToDestructiveMigration()
             .build()
 
-    @Provides fun provideStudentDao(db: AppDatabase): StudentDao = db.studentDao()
+    @Provides fun provideStudentDao(db: AppDatabase): UserDao = db.userDao()
     @Provides fun provideCourseDao(db: AppDatabase): CourseDao = db.courseDao()
     @Provides fun provideSubscribeDao(db: AppDatabase): SubscribeDao = db.subscribeDao()
 
     @Provides
     @Singleton
-    fun provideRepository(studentDao: StudentDao, courseDao: CourseDao,
-                          subscribeDao: SubscribeDao): SCRUDRepository =
-        SCRUDRepository(studentDao, courseDao, subscribeDao)
+    fun provideStudentRepository(userDao: UserDao): StudentRepository =
+        StudentRepository(userDao)
+    @Provides
+    @Singleton
+    fun provideCourseRepository(courseDao: CourseDao): CourseRepository =
+        CourseRepository(courseDao)
+    @Provides
+    @Singleton
+    fun provideSubscribeRepository(subscribeDao: SubscribeDao): SubscriptionRepository =
+        SubscriptionRepository(subscribeDao)
 }

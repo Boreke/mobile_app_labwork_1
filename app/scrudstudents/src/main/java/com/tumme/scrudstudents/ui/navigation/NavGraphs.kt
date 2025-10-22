@@ -7,6 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.tumme.scrudstudents.ui.HomePageScreen
+import com.tumme.scrudstudents.ui.auth.LoginScreen
+import com.tumme.scrudstudents.ui.auth.SignUpScreen
 import com.tumme.scrudstudents.ui.course.CourseFormScreen
 import com.tumme.scrudstudents.ui.course.CourseListScreen
 import com.tumme.scrudstudents.ui.student.StudentDetailScreen
@@ -25,6 +27,10 @@ object Routes {
     const val SUBSCRIBE_LIST = "subscribe_list"
     const val SUBSCRIBE_FORM = "subscribe_form"
 
+    const val LOGIN = "login"
+
+    const val SIGNUP = "signup"
+
     const val HOME = "home"
 
 }
@@ -32,7 +38,7 @@ object Routes {
 @Composable
 fun AppNavHost() {
     val navController = rememberNavController()
-    NavHost(navController, startDestination = Routes.HOME) {
+    NavHost(navController, startDestination = Routes.LOGIN) {
         composable(Routes.HOME){
             HomePageScreen(
                 onNavigateToCourses = { navController.navigate(Routes.COURSE_LIST) },
@@ -67,5 +73,18 @@ fun AppNavHost() {
         composable(Routes.SUBSCRIBE_FORM) {
             SubscribeFormScreen(onSaved = { navController.popBackStack() })
         }
+        composable (Routes.LOGIN){
+            LoginScreen(
+                onNavigateToSignUpScreen = { navController.navigate(Routes.SIGNUP) },
+                onLoginSuccess = { navController.navigate(Routes.HOME) },
+            )
+        }
+        composable(Routes.SIGNUP){
+            SignUpScreen(
+                onNavigateToLoginScreen = { navController.navigate(Routes.LOGIN) },
+                onSignUpSuccess = { navController.navigate(Routes.HOME) }
+            )
+        }
+
     }
 }

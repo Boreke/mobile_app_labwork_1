@@ -1,8 +1,8 @@
 package com.tumme.scrudstudents.domain.usecase.student
 
-import com.tumme.scrudstudents.data.local.model.StudentEntity
-import com.tumme.scrudstudents.data.repository.SCRUDRepository
+import com.tumme.scrudstudents.data.local.model.UserEntity
+import com.tumme.scrudstudents.data.repository.StudentRepository
 
-class InsertStudentUseCase(private val repo: SCRUDRepository) {
-    suspend operator fun invoke(student: StudentEntity) = repo.insertStudent(student)
+class InsertStudentUseCase(private val repo: StudentRepository) {
+    suspend operator fun invoke(student: UserEntity) = repo.insertStudent(student)
 }

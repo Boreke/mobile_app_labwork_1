@@ -11,13 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.tumme.scrudstudents.data.local.model.StudentEntity
+import com.tumme.scrudstudents.data.local.model.UserEntity
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 @Composable
 fun StudentRow(
-    student: StudentEntity,
+    student: UserEntity,
     onEdit: ()->Unit,
     onDelete: ()->Unit,
     onView: ()->Unit,

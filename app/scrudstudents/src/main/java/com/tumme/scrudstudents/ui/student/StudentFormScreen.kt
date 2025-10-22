@@ -10,7 +10,9 @@ import java.util.Date
 import java.util.Locale
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tumme.scrudstudents.data.local.model.Gender
-import com.tumme.scrudstudents.data.local.model.StudentEntity
+import com.tumme.scrudstudents.data.local.model.Role
+import com.tumme.scrudstudents.data.local.model.UserEntity
+import com.tumme.scrudstudents.ui.viewmodels.StudentListViewModel
 
 @Composable
 fun StudentFormScreen(
@@ -44,12 +46,13 @@ fun StudentFormScreen(
         Spacer(Modifier.height(16.dp))
         Button(onClick = {
             val dob = dateFormat.parse(dobText) ?: Date()
-            val student = StudentEntity(
-                idStudent = id,
+            val student = UserEntity(
+                idUser = id,
                 lastName = lastName,
                 firstName = firstName,
                 dateOfBirth = dob,
-                gender = gender
+                gender = gender,
+                role = Role.Student,
             )
             viewModel.insertStudent(student)
             onSaved()

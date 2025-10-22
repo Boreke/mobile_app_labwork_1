@@ -8,7 +8,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.tumme.scrudstudents.data.local.model.StudentEntity
+import com.tumme.scrudstudents.data.local.model.UserEntity
+import com.tumme.scrudstudents.ui.viewmodels.StudentListViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -20,7 +21,7 @@ fun StudentDetailScreen(
     onBack: ()->Unit = {}
 ) {
     val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-    var student by remember { mutableStateOf<StudentEntity?>(null) }
+    var student by remember { mutableStateOf<UserEntity?>(null) }
 
     LaunchedEffect(studentId) {
         student = viewModel.findStudent(studentId)
@@ -35,7 +36,7 @@ fun StudentDetailScreen(
             if (student == null) {
                 Text("Loading...")
             } else {
-                Text("ID: ${student!!.idStudent}")
+                Text("ID: ${student!!.idUser}")
                 Text("Name: ${student!!.firstName} ${student!!.lastName}")
                 Text("DOB: ${sdf.format(student!!.dateOfBirth)}")
                 Text("Gender: ${student!!.gender.value}")

@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.tumme.scrudstudents.ui.viewmodels.StudentListViewModel
 
 // Composable screen that displays a list of students.
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,7 +50,7 @@ fun StudentListScreen(
                         student = student,
                         onEdit = { /* Not yet implemented */ },
                         onDelete = { viewModel.deleteStudent(student) }, // Deletes the student.
-                        onView = { onNavigateToDetail(student.idStudent) }, // Navigates to student details.
+                        onView = { onNavigateToDetail(student.idUser) }, // Navigates to student details.
                         onShare = { /* Not yet implemented */ }
                     )
                 }

@@ -7,8 +7,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tumme.scrudstudents.data.local.model.CourseEntity
-import com.tumme.scrudstudents.data.local.model.StudentEntity
+import com.tumme.scrudstudents.data.local.model.UserEntity
 import com.tumme.scrudstudents.data.local.model.SubscribeEntity
+import com.tumme.scrudstudents.ui.viewmodels.SubscribeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -19,7 +20,7 @@ fun SubscribeFormScreen(
     val students by viewModel.students.collectAsState()
     val courses by viewModel.courses.collectAsState()
 
-    var selectedStudent by remember { mutableStateOf<StudentEntity?>(null) }
+    var selectedStudent by remember { mutableStateOf<UserEntity?>(null) }
     var selectedCourse by remember { mutableStateOf<CourseEntity?>(null) }
     var score by remember { mutableStateOf("") }
 
@@ -109,7 +110,7 @@ fun SubscribeFormScreen(
                 val course = selectedCourse
                 if (student != null && course != null && score.isNotEmpty()) {
                     val subscription = SubscribeEntity(
-                        idStudent = student.idStudent,
+                        idUser = student.idUser,
                         idCourse = course.idCourse,
                         score = score.toFloatOrNull() ?: 0f
                     )

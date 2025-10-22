@@ -19,7 +19,7 @@ fun SubscriptionRow(subscription: SubscriptionWithDetails) {
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = "${subscription.studentFirstName} ${subscription.studentLastName}", modifier = Modifier.weight(0.4f))
+        Text(text = "${subscription.userFirstName} ${subscription.userLastName}", modifier = Modifier.weight(0.4f))
         Text(text = subscription.courseName, modifier = Modifier.weight(0.4f))
         Text(text = subscription.score.toString(), modifier = Modifier.weight(0.2f))
     }

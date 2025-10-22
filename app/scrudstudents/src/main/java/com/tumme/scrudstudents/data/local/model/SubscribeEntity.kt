@@ -14,12 +14,12 @@ import androidx.room.ForeignKey
 @Entity(
     tableName = "subscribes",
     // A student can only be subscribed to a specific course once.
-    primaryKeys = ["idStudent", "idCourse"],
+    primaryKeys = ["idUser", "idCourse"],
     foreignKeys = [
         ForeignKey(
-            entity = StudentEntity::class,
-            parentColumns = ["idStudent"],
-            childColumns = ["idStudent"],
+            entity = UserEntity::class,
+            parentColumns = ["idUser"],
+            childColumns = ["idUser"],
             onDelete = ForeignKey.CASCADE // If a student is deleted, their subscriptions are also deleted.
         ),
         ForeignKey(
@@ -31,7 +31,7 @@ import androidx.room.ForeignKey
     ]
 )
 data class SubscribeEntity(
-    val idStudent: Int,
+    val idUser: Int,
     val idCourse: Int,
     val score: Float
 )

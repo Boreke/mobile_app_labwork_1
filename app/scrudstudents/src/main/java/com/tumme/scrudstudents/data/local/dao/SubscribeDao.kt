@@ -16,23 +16,25 @@ interface SubscribeDao {
     @Query("SELECT * FROM subscribes")
     fun getAllSubscribes(): Flow<List<SubscribeEntity>>
 
-    @Query("SELECT * FROM subscribes WHERE idStudent = :sId")
+    @Query("SELECT * FROM subscribes WHERE idUser= :sId")
     fun getSubscribesByStudent(sId: Int): Flow<List<SubscribeEntity>>
 
     @Query("SELECT * FROM subscribes WHERE idCourse = :cId")
     fun getSubscribesByCourse(cId: Int): Flow<List<SubscribeEntity>>
 
-    @Query("""
+    @Query(
+        """
         SELECT 
-            s.idStudent, 
+            s.idUser, 
             s.idCourse, 
-            st.firstName AS studentFirstName, 
-            st.lastName AS studentLastName, 
+            st.firstName AS userFirstName, 
+            st.lastName AS userLastName, 
             c.nameCourse AS courseName, 
             s.score
         FROM subscribes s
-        INNER JOIN students st ON s.idStudent = st.idStudent
+        INNER JOIN users st ON s.idUser = st.idUser
         INNER JOIN courses c ON s.idCourse = c.idCourse
-    """)
+    """
+    )
     fun getAllSubscriptionsWithDetails(): Flow<List<SubscriptionWithDetails>>
 }
