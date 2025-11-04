@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.tumme.scrudstudents.data.session.SessionManager
 import com.tumme.scrudstudents.ui.viewmodels.StudentListViewModel
 
 // Composable screen that displays a list of students.
@@ -17,7 +18,8 @@ import com.tumme.scrudstudents.ui.viewmodels.StudentListViewModel
 fun StudentListScreen(
     viewModel: StudentListViewModel = hiltViewModel(), // Injected ViewModel.
     onNavigateToForm: () -> Unit = {}, // Navigation callback to the form screen.
-    onNavigateToDetail: (Int) -> Unit = {} // Navigation callback to the detail screen.
+    onNavigateToDetail: (Int) -> Unit = {}, // Navigation callback to the detail screen.
+    sessionManager: SessionManager
 ) {
     // `collectAsState` observes the `students` Flow from the ViewModel.
     // Recomposition happens automatically when the student list changes.
@@ -26,7 +28,9 @@ fun StudentListScreen(
     Scaffold(
         topBar = { TopAppBar(title = { Text("Students") }) },
         floatingActionButton = {
-            FloatingActionButton(onClick = onNavigateToForm) { Text("+") }
+            if(sessionManager.getUserRole()?.name != "Student") {
+                FloatingActionButton(onClick = onNavigateToForm) { Text("+") }
+            }
         }
     ) { padding ->
         Column(

@@ -37,4 +37,21 @@ interface SubscribeDao {
     """
     )
     fun getAllSubscriptionsWithDetails(): Flow<List<SubscriptionWithDetails>>
+
+    @Query(
+        """
+        SELECT 
+            s.idUser, 
+            s.idCourse, 
+            st.firstName AS userFirstName, 
+            st.lastName AS userLastName, 
+            c.nameCourse AS courseName, 
+            s.score
+        FROM subscribes s
+        INNER JOIN users st ON s.idUser = st.idUser
+        INNER JOIN courses c ON s.idCourse = c.idCourse
+        WHERE s.idUser = :sId
+    """
+    )
+    fun getSubscribesByStudentWithDetails(sId: Int): Flow<List<SubscriptionWithDetails>>
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tumme.scrudstudents.data.local.model.CourseEntity
 import com.tumme.scrudstudents.data.repository.CourseRepository
+import com.tumme.scrudstudents.data.session.SessionManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -16,13 +17,15 @@ import javax.inject.Inject
 // ViewModel for the Course List Screen, handles business logic.
 @HiltViewModel
 class CourseListViewModel @Inject constructor(
-    private val repo: CourseRepository // Repository for data operations.
+    private val repo: CourseRepository, // Repository for data operations.
+    private val sessionManager: SessionManager
 ) : ViewModel() {
 
     // Holds the list of courses as a StateFlow, which the UI observes.
     val courses: StateFlow<List<CourseEntity>> =
         repo.getAllCourses().stateIn(viewModelScope, SharingStarted.Companion.Lazily, emptyList())
 
+    var currentUserId = sessionManager.getUserId()
     // Used to send one-time events to the UI (e.g., for Snackbars).
     private val _events = MutableSharedFlow<String>()
     val events = _events.asSharedFlow()

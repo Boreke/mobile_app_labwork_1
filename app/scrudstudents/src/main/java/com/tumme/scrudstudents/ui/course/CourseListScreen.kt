@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.tumme.scrudstudents.data.session.SessionManager
 import com.tumme.scrudstudents.ui.viewmodels.CourseListViewModel
 
 // Composable screen that displays a list of courses.
@@ -18,7 +19,8 @@ import com.tumme.scrudstudents.ui.viewmodels.CourseListViewModel
 fun CourseListScreen(
     viewModel: CourseListViewModel = hiltViewModel(), // Injected ViewModel.
     onNavigateToForm: () -> Unit = {}, // Navigation callback to the form screen.
-    onNavigateToDetail: (Int) -> Unit = {} // Navigation callback to the detail screen.
+    onNavigateToDetail: (Int) -> Unit = {}, // Navigation callback to the detail screen.
+    sessionManager: SessionManager
 ) {
     // `collectAsState` observes the `courses` Flow from the ViewModel.
     // Recomposition happens automatically when the course list changes.
@@ -27,7 +29,9 @@ fun CourseListScreen(
     Scaffold(
         topBar = { TopAppBar(title = { Text("Courses") }) },
         floatingActionButton = {
-            FloatingActionButton(onClick = onNavigateToForm) { Text("+") }
+            if(sessionManager.getUserRole()?.name != "Student") {
+                FloatingActionButton(onClick = onNavigateToForm) { Text("+") }
+            }
         }
     ) { padding ->
         Column(
@@ -52,7 +56,7 @@ fun CourseListScreen(
                         onEdit = { /* Not yet implemented */ },
                         onDelete = { viewModel.deleteCourse(course) }, // Deletes the course.
                         onView = { onNavigateToDetail(course.idCourse) }, // Navigates to course details.
-                        onShare = { /* Not yet implemented */ }
+                        onSubscribe = { /* Not yet implemented */ }
                     )
                 }
             }

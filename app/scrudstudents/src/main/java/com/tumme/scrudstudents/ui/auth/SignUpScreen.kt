@@ -18,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
@@ -27,6 +28,7 @@ import com.tumme.scrudstudents.ui.viewmodels.SignUpViewModel
 import com.tumme.scrudstudents.data.local.model.UserEntity
 import com.tumme.scrudstudents.data.local.model.Gender
 import com.tumme.scrudstudents.data.local.model.Role
+import com.tumme.scrudstudents.ui.components.RadioButton
 import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -75,6 +77,18 @@ fun SignUpScreen(
                 modifier = Modifier.padding(top = 8.dp)
             )
 
+            var selectedRole by rememberSaveable { mutableStateOf(Role.Student.name) }
+            RadioButton(
+                options=Role.values().map { it.name },
+                onSelected = { selectedRole = it }
+            )
+            var selectedGender by rememberSaveable { mutableStateOf(Gender.NotConcerned.name) }
+            RadioButton(
+                options = Gender.values().map { it.name },
+                onSelected = { selectedGender = it }
+            )
+
+
             Button(
                 onClick = {
                     val user = UserEntity(
@@ -82,8 +96,8 @@ fun SignUpScreen(
                         lastName = lastName,
                         firstName = firstName,
                         dateOfBirth = Date(),
-                        gender = Gender.NotConcerned,
-                        role = Role.Student
+                        gender = Gender.valueOf(selectedGender),
+                        role = Role.valueOf(selectedRole)
                     )
                     viewModel.signUp(user)
                 },

@@ -17,4 +17,5 @@ interface CourseDao {
 
     @Query("SELECT * FROM courses WHERE idCourse = :id LIMIT 1")
     suspend fun getCourseById(id: Int): CourseEntity?
+
 }

@@ -17,6 +17,7 @@ class SubscriptionRepository (
     /** Returns a Flow that emits a list of subscriptions for a given student. */
     fun getSubscribesByStudent(sId: Int): Flow<List<SubscribeEntity>> = subscribeDao.getSubscribesByStudent(sId)
 
+    fun getSubscribesByStudentWithDetails(sId: Int): Flow<List<SubscriptionWithDetails>> = subscribeDao.getSubscribesByStudentWithDetails(sId)
     /** Returns a Flow that emits a list of subscriptions for a given course. */
     fun getSubscribesByCourse(cId: Int): Flow<List<SubscribeEntity>> = subscribeDao.getSubscribesByCourse(cId)
 

@@ -49,4 +49,6 @@ interface UserDao {
     @Query("SELECT * FROM users WHERE firstname = :firstName AND lastname = :lastName LIMIT 1")
     suspend fun getUserByName(firstName: String, lastName: String): UserEntity?
 
+
+
 }

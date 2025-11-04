@@ -7,8 +7,12 @@ import javax.inject.Inject
 class AuthRepository @Inject constructor(
     private val userDao: UserDao,
 ) {
-    suspend fun login(user: UserEntity){
-        userDao.getUserByName(user.firstName,user.lastName)
+    suspend fun login(user: UserEntity): UserEntity? {
+        return try {
+            userDao.getUserByName(user.firstName, user.lastName)
+        } catch (e: Exception) {
+            null
+        }
     }
 
     suspend fun signUp(user: UserEntity){

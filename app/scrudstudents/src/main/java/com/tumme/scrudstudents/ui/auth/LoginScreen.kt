@@ -35,11 +35,16 @@ fun LoginScreen(
     onNavigateToSignUpScreen: () -> Unit = {},
     onLoginSuccess: () -> Unit = {}
 ){
+
+    var eventMessage by remember { mutableStateOf("") }
+
     // Collect one-shot events from the ViewModel and react to login success.
     LaunchedEffect(viewModel) {
         viewModel.events.collect { event ->
-            if (event == "Logged in") {
-                onLoginSuccess()
+            // Supporter différents formats d'événements : sealed class ou string
+            when (event) {
+                "Logged in" -> onLoginSuccess()
+                else -> eventMessage = event
             }
         }
     }
@@ -86,6 +91,10 @@ fun LoginScreen(
                 viewModel.login(user)
             }) {
                 Text(text = "Login")
+            }
+
+            if (eventMessage.isNotEmpty()) {
+                Text(text = eventMessage, modifier = Modifier.padding(top = 12.dp))
             }
 
             TextButton(onClick = onNavigateToSignUpScreen) {

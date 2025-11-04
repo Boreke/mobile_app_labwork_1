@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Start
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,7 +23,8 @@ fun CourseRow(
     onEdit: ()->Unit,
     onDelete: ()->Unit,
     onView: ()->Unit,
-    onShare: ()->Unit
+    onSubscribe: ()->Unit,
+    role: String = ""
 ) {
     Row(modifier = Modifier
         .fillMaxWidth()
@@ -35,10 +37,15 @@ fun CourseRow(
         Text(text = course.levelCourse.value, modifier = Modifier.weight(0.25f))
 
         Row(modifier = Modifier.weight(0.25f)) {
-            IconButton(onClick = onEdit) { Icon(Icons.Default.Edit, contentDescription="Edit") }
-            IconButton(onClick = onDelete) { Icon(Icons.Default.Delete, contentDescription="Delete") }
-            IconButton(onClick = onShare) { Icon(Icons.Default.Share, contentDescription="Share") }
-            IconButton(onClick = onView) { Icon(Icons.Default.Info, contentDescription="View") }
+            if(role != "Student"){
+                IconButton(onClick = onEdit) { Icon(Icons.Default.Edit, contentDescription="Edit") }
+                IconButton(onClick = onDelete) { Icon(Icons.Default.Delete, contentDescription="Delete") }
+            }
+            if(role == "Student"){
+                IconButton(onClick = onView) { Icon(Icons.Default.Info, contentDescription="View") }
+                IconButton(onClick = onSubscribe) { Icon(Icons.Default.Start, contentDescription="subscribe") }
+            }
+
         }
     }
     HorizontalDivider()

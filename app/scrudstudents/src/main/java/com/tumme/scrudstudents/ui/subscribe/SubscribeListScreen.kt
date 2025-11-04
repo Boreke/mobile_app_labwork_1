@@ -14,6 +14,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.tumme.scrudstudents.data.local.model.Role
+import com.tumme.scrudstudents.data.session.SessionManager
 import com.tumme.scrudstudents.ui.components.TableHeader
 import com.tumme.scrudstudents.ui.viewmodels.SubscribeViewModel
 
@@ -21,9 +23,11 @@ import com.tumme.scrudstudents.ui.viewmodels.SubscribeViewModel
 @Composable
 fun SubscribeListScreen(
     viewModel: SubscribeViewModel = hiltViewModel(),
-    onNavigateToForm: () -> Unit
+    onNavigateToForm: () -> Unit,
+    sessionManager: SessionManager
 ) {
     val subscriptions by viewModel.subscriptions.collectAsState()
+    val studentSubscriptions by viewModel.studentSubscriptions.collectAsState()
 
     Scaffold(
         topBar = { TopAppBar(title = { Text("Subscriptions") }) },
@@ -45,8 +49,14 @@ fun SubscribeListScreen(
             )
             Spacer(modifier = Modifier.height(8.dp))
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(subscriptions) { subscription ->
-                    SubscriptionRow(subscription)
+                if (sessionManager.getUserRole() != Role.Student) {
+                    items(studentSubscriptions) { studentSubscription ->
+                        SubscriptionRow(studentSubscription)
+                    }
+                } else {
+                    items(subscriptions) { subscription ->
+                        SubscriptionRow(subscription)
+                    }
                 }
             }
         }
