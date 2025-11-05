@@ -15,14 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.tumme.scrudstudents.data.local.model.UserEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomePageScreen(
     onNavigateToCourses: () -> Unit = {}, 
     onNavigateToStudents: () -> Unit = {},
-    onNavigateToSubscriptions: () -> Unit = {}
+    onNavigateToSubscriptions: () -> Unit = {},
+    onLogout: () -> Unit = {} // added logout callback
 ){
     Scaffold(
         topBar = { TopAppBar(title = { Text("Home") }) }
@@ -45,6 +45,11 @@ fun HomePageScreen(
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = onNavigateToSubscriptions) {
                 Text("Manage Subscriptions")
+            }
+            Spacer(modifier = Modifier.height(24.dp))
+            // Logout button
+            Button(onClick = onLogout) {
+                Text("Logout")
             }
         }
     }

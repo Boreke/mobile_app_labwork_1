@@ -66,7 +66,15 @@ fun AppNavHost() {
             HomePageScreen(
                 onNavigateToCourses =  { navController.navigate(Routes.COURSE_LIST) },
                 onNavigateToStudents = { navController.navigate(Routes.STUDENT_LIST) },
-                onNavigateToSubscriptions = { navController.navigate(Routes.SUBSCRIBE_LIST) }
+                onNavigateToSubscriptions = { navController.navigate(Routes.SUBSCRIBE_LIST) },
+                onLogout = {
+                    // Clear session and navigate to login, removing Home from back stack
+                    sessionManager.clearSession()
+                    navController.navigate(Routes.LOGIN) {
+                        popUpTo(Routes.HOME) { inclusive = true }
+                        launchSingleTop = true
+                    }
+                }
             )
         }
         composable(Routes.STUDENT_LIST) {

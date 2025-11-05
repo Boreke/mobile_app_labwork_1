@@ -22,7 +22,7 @@ class StudentRepository(
     fun getAllStudents(): Flow<List<UserEntity>> = userDao.getAllStudents()
 
     /** Inserts or updates a student in the database. */
-    suspend fun insertStudent(student: UserEntity) = userDao.insert(student)
+    suspend fun insertStudent(student: UserEntity) = userDao.insertStudent(student)
 
     /** Deletes a student from the database. */
     suspend fun deleteStudent(student: UserEntity) = userDao.delete(student)

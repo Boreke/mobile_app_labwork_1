@@ -28,7 +28,7 @@ fun SubscribeListScreen(
 ) {
     val subscriptions by viewModel.subscriptions.collectAsState()
     val studentSubscriptions by viewModel.studentSubscriptions.collectAsState()
-
+    var currentUserRole = sessionManager.getUserRole()
     Scaffold(
         topBar = { TopAppBar(title = { Text("Subscriptions") }) },
         floatingActionButton = {
@@ -49,7 +49,7 @@ fun SubscribeListScreen(
             )
             Spacer(modifier = Modifier.height(8.dp))
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                if (sessionManager.getUserRole() != Role.Student) {
+                if (currentUserRole != Role.Student) {
                     items(studentSubscriptions) { studentSubscription ->
                         SubscriptionRow(studentSubscription)
                     }

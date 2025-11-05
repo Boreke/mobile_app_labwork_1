@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.tumme.scrudstudents.data.local.model.Role
 import com.tumme.scrudstudents.data.session.SessionManager
 import com.tumme.scrudstudents.ui.viewmodels.StudentListViewModel
 
@@ -28,7 +29,8 @@ fun StudentListScreen(
     Scaffold(
         topBar = { TopAppBar(title = { Text("Students") }) },
         floatingActionButton = {
-            if(sessionManager.getUserRole()?.name != "Student") {
+            val role = sessionManager.getUserRole()
+            if (role != null && role != Role.Student) {
                 FloatingActionButton(onClick = onNavigateToForm) { Text("+") }
             }
         }

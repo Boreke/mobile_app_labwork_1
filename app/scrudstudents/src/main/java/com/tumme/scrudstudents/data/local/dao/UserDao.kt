@@ -8,13 +8,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface UserDao {
 
-    @Query("SELECT * FROM users WHERE role = 'student' ORDER BY lastName, firstName")
+    @Query("SELECT * FROM users WHERE role = 'Student' ORDER BY lastName, firstName")
     fun getAllStudents(): Flow<List<UserEntity>>
 
-    @Query("SELECT * FROM users WHERE role = 'teacher' ORDER BY lastName, firstName")
+    @Query("SELECT * FROM users WHERE role = 'Teacher' ORDER BY lastName, firstName")
     fun getAllTeachers(): Flow<List<UserEntity>>
 
-    @Query("SELECT * FROM users WHERE role = 'admin' ORDER BY lastName, firstName")
+    @Query("SELECT * FROM users WHERE role = 'Admin' ORDER BY lastName, firstName")
     fun getAllAdmins(): Flow<List<UserEntity>>
 
     @Query("SELECT * FROM users  ORDER BY lastName, firstName")

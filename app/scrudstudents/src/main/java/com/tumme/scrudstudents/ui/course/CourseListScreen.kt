@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tumme.scrudstudents.data.session.SessionManager
 import com.tumme.scrudstudents.ui.viewmodels.CourseListViewModel
+import com.tumme.scrudstudents.data.local.model.Role // added import
 
 // Composable screen that displays a list of courses.
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,10 +27,15 @@ fun CourseListScreen(
     // Recomposition happens automatically when the course list changes.
     val courses by viewModel.courses.collectAsState()
 
+    // Read the role once and reuse. This makes debugging easier and avoids multiple
+    // calls to SharedPreferences during composition.
+    val role = sessionManager.getUserRole()
+
     Scaffold(
         topBar = { TopAppBar(title = { Text("Courses") }) },
         floatingActionButton = {
-            if(sessionManager.getUserRole()?.name != "Student") {
+            // Explicit check: only Admins and Teachers get the FAB.
+            if (role == Role.Admin || role == Role.Teacher) {
                 FloatingActionButton(onClick = onNavigateToForm) { Text("+") }
             }
         }
@@ -40,7 +46,8 @@ fun CourseListScreen(
                 .padding(padding)
                 .padding(16.dp)
         ) {
-            // Display the header for the list.
+            // Debug: show current role read from SessionManager (temporary)
+
             TableHeader(
                 cells = listOf("Name", "ECTS", "Level", "Actions"),
                 weights = listOf(0.25f, 0.25f, 0.25f, 0.25f)

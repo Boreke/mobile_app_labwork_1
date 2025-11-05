@@ -40,8 +40,17 @@ class SessionManager @Inject constructor(@ApplicationContext context: Context) {
         return prefs.getInt(KEY_USER_ID, NO_USER)
     }
     fun getUserRole(): Role? {
-        val roleName = prefs.getString(USER_ROLE, null)
-        return roleName?.let { Role.valueOf(it) }
+        val roleName = prefs.getString(USER_ROLE, null) ?: return null
+        // Try strict enum lookup first (expects names like "Student").
+        return try {
+            Role.valueOf(roleName)
+        } catch (e: Exception) {
+            // Fallback: try to resolve by the stored role 'value' (e.g. "student")
+            // Role.from handles the lowercase/internal representation.
+            Role.from(roleName.lowercase())
+                // As a final fallback, match ignoring case against enum names.
+                ?: Role.values().firstOrNull { it.name.equals(roleName, ignoreCase = true) }
+        }
     }
     /**
      * Checks if a user is currently logged in.

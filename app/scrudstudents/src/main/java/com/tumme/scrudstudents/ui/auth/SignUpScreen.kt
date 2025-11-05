@@ -79,12 +79,12 @@ fun SignUpScreen(
 
             var selectedRole by rememberSaveable { mutableStateOf(Role.Student.name) }
             RadioButton(
-                options=Role.values().map { it.name },
+                options= Role.entries.map { it.name },
                 onSelected = { selectedRole = it }
             )
             var selectedGender by rememberSaveable { mutableStateOf(Gender.NotConcerned.name) }
             RadioButton(
-                options = Gender.values().map { it.name },
+                options = Gender.entries.map { it.name },
                 onSelected = { selectedGender = it }
             )
 
